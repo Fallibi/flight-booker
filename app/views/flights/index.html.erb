@@ -1,0 +1,56 @@
+<h1>✈️ Flight Booker</h1>
+
+<h2>Search for a Flight</h2>
+<%= form_with(url: flights_path, method: :get, local: true) do |f| %>
+  <div class="field">
+    <%= f.label :departure_airport_id, "From" %>
+    <%= f.select :departure_airport_id, @airports %>
+  </div>
+
+  <div class="field">
+    <%= f.label :arrival_airport_id, "To" %>
+    <%= f.select :arrival_airport_id, @airports %>
+  </div>
+
+  <div class="field">
+    <%= f.label :num_tickets, "Number of Passengers" %>
+    <%= f.select :num_tickets, @passenger_options %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date, "Date" %>
+    <%= f.select :date, @available_dates %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Search" %>
+  </div>
+<% end %>
+
+<hr>
+
+<% if @available_flights.present? %>
+  <h2>Available Flights</h2>
+  <p>Found <%= @available_flights.count %> flight(s) matching your search.</p>
+
+  <%= form_with(url: new_booking_path, method: :get, local: true) do |f| %>
+    <%= hidden_field_tag :num_tickets, params[:num_tickets] %>
+    
+    <% @available_flights.each do |flight| %>
+      <div class="flight-option">
+        <%= radio_button_tag :flight_id, flight.id %>
+        <%= label_tag "flight_id_#{flight.id}" do %>
+          <strong><%= flight.departure_airport.code %> &rarr; <%= flight.arrival_airport.code %></strong><br>
+          Date: <%= flight.start_datetime.strftime("%m/%d/%Y") %><br>
+          Time: <%= flight.start_datetime.strftime("%I:%M %p") %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Book Selected Flight" %>
+    </div>
+  <% end %>
+<% elsif params[:commit].present? %>
+  <p>No flights found for the selected criteria.</p>
+<% end %>

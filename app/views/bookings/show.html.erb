@@ -1,0 +1,22 @@
+<h1>Booking Confirmation</h1>
+<p>Your flight has been successfully booked. Thank you!</p>
+
+<h2>Booking Details</h2>
+<h3>Flight Information</h3>
+<p>
+  <strong>Route:</strong> <%= @booking.flight.departure_airport.code %> &rarr; <%= @booking.flight.arrival_airport.code %><br>
+  <strong>Date:</strong> <%= @booking.flight.start_datetime.strftime("%B %d, %Y") %><br>
+  <strong>Time:</strong> <%= @booking.flight.start_datetime.strftime("%I:%M %p") %>
+</p>
+
+<h3>Passenger Details</h3>
+<ul>
+  <% @booking.passengers.each do |passenger| %>
+    <li>
+      <strong>Name:</strong> <%= passenger.name %><br>
+      <strong>Email:</strong> <%= passenger.email %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Book Another Flight", root_path %>

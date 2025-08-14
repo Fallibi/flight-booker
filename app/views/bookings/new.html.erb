@@ -1,0 +1,35 @@
+<h1>Create Booking</h1>
+<h2>Selected Flight Details</h2>
+
+<p>
+  <strong>From:</strong> <%= @flight.departure_airport.code %><br>
+  <strong>To:</strong> <%= @flight.arrival_airport.code %><br>
+  <strong>Date:</strong> <%= @flight.start_datetime.strftime("%m/%d/%Y") %><br>
+  <strong>Time:</strong> <%= @flight.start_datetime.strftime("%I:%M %p") %>
+</p>
+
+<hr>
+
+<h2>Enter Passenger Information</h2>
+<%= form_with model: @booking do |f| %>
+  <%= f.hidden_field :flight_id, value: @flight.id %>
+
+  <h3>Passengers</h3>
+  <%= f.fields_for :passengers do |passenger_form| %>
+    <div class="passenger-fields">
+      <div class="field">
+        <%= passenger_form.label :name %>
+        <%= passenger_form.text_field :name, required: true %>
+      </div>
+      <div class="field">
+        <%= passenger_form.label :email %>
+        <%= passenger_form.email_field :email, required: true %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Confirm Booking" %>
+  </div>
+<% end %>
