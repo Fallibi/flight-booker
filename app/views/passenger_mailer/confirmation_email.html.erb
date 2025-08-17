@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Thanks for booking, <%= @passenger.name %>!</h1>
+    <p>
+      Your flight from <strong><%= @flight.departure_airport.code %></strong> to <strong><%= @flight.arrival_airport.code %></strong> is confirmed.
+    </p>
+    <p>
+      <b>Date:</b> <%= @flight.start_datetime.strftime("%B %d, %Y") %><br>
+      <b>Time:</b> <%= @flight.start_datetime.strftime("%I:%M %p") %>
+    </p>
+    <p>Have a great trip!</p>
+  </body>
+</html>

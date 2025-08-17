@@ -10,7 +10,17 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
 
     if @booking.save
-      # In a real app, you would send a confirmation email here
+      puts "--------------------------------------------------"
+      puts "✅ Booking ##{@booking.id} created successfully."
+      puts "Looping through #{@booking.passengers.count} passengers to send emails..."
+      @booking.passengers.each do |passenger|
+        puts "  -> Sending email to: #{passenger.name} (#{passenger.email})"
+        PassengerMailer.confirmation_email(passenger).deliver_now
+      end
+      
+      puts "✅ Finished sending emails."
+      puts "--------------------------------------------------"
+
       flash[:success] = "Flight booked successfully! ✅"
       redirect_to booking_path(@booking)
     else

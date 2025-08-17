@@ -1,0 +1,11 @@
+Hi <%= @passenger.name %>,
+
+Thank you for booking your flight! Your ticket is confirmed.
+
+Here are your flight details:
+- From: <%= @flight.departure_airport.code %>
+- To: <%= @flight.arrival_airport.code %>
+- Date: <%= @flight.start_datetime.strftime("%B %d, %Y") %>
+- Time: <%= @flight.start_datetime.strftime("%I:%M %p") %>
+
+Have a great trip!
